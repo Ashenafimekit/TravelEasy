@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.carousel-item {
+    @apply transition-transform duration-500 ease-in-out;
+  }
+  
+  .slick-center .carousel-item {
+    @apply scale-110; /* Enlarge the center image */
+  }
+  
+  .slick-slide:not(.slick-center) .carousel-item {
+    @apply scale-90; /* Reduce size of the non-centered images */
+  }
+  

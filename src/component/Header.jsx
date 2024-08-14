@@ -8,7 +8,7 @@ const Header = () => {
           <h1>TravelEase</h1>
         </div>
 
-        <div className="link flex-1 flex items-center justify-end space-x-8">
+        <div className="link flex-1 flex items-center justify-end space-x-8 ">
           <a href="#">BOOKING</a>
           <a href="#">ROUTES</a>
           <a href="#">ABOUT US</a>
