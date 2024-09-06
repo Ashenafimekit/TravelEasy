@@ -21,7 +21,7 @@ const Footer = () => {
       </div>
       <div className="flex flex-col w-3/4">
         <div className="">
-          <hr class="border-t-1 border-black my-4" />
+          <hr className="border-t-1 border-black my-4" />
         </div>
         <div className="flex flex-row items-start gap-72 mb-5">
           <Link
