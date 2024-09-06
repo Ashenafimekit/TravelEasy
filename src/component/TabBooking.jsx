@@ -4,7 +4,7 @@ const { TabPane } = Tabs;
 
 const TabBooking = () => {
   return (
-    <div className="flex ">
+    <div className="flex px-20">
       <Tabs defaultActiveKey="1" tabPosition="top" className="custom-tabs">
         <TabPane tab="Current Booking" key="1" >
           Current Booking

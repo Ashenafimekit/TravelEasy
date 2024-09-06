@@ -6,6 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import XIcon from '@mui/icons-material/X';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import axios from "axios";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -22,10 +23,15 @@ const ContactForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    try {
+      const response = await axios.post('',formData)
+      console.log("success ",response.data )
+      alert(response.data.message)
+    } catch (error) {
+      console.log(error)
+    }
   };
   return (
     <div className="flex flex-row items-center justify-center mx-32 m-5 mb-10 gap-2 bg-white rounded-lg shadow-xl ">

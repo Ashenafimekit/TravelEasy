@@ -1,16 +1,32 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const BookForm = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [payment, setPayment] = useState("");
+  const [userData, setUserData] = useState({
+    name: "",
+    phone: "",
+    payment: "",
+  });
   const location = useLocation();
-  const {departure,destination,date} = location.state || {}
+  const { departure, destination, date } = location.state || {};
 
-  const handleBook = (e) => {
+  const handleChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleBook = async(e) => {
     e.preventDefault();
-    console.log("booked ", { name, phone, payment });
+    try {
+      const response = await axios.post('',userData)
+      console.log("success", response.data)
+      alert(response.data.message)
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -18,28 +34,40 @@ const BookForm = () => {
       <div className="bg-[#F5F5F5] rounded-lg w-2/6 ">
         <h1 className="font-bold text-2xl text-center">Booking Form</h1>
         <form onSubmit={handleBook} className="flex flex-col gap-5 px-10 py-4">
-          <input type="text" value={departure} className="border border-black rounded-lg text-center" />
-          <label className="text-center -my-5">to</label>
-          <input type="text" value={destination} className="border border-black rounded-lg text-center" />
-          <input type="text" value={date} className="border border-black rounded-lg text-center" />
           <input
             type="text"
-            value={name}
+            value={departure}
+            className="border border-black rounded-lg text-center"
+          />
+          <label className="text-center -my-5">to</label>
+          <input
+            type="text"
+            value={destination}
+            className="border border-black rounded-lg text-center"
+          />
+          <input
+            type="text"
+            value={date}
+            className="border border-black rounded-lg text-center"
+          />
+          <input
+            type="text"
             className="border border-black rounded-lg text-center"
             placeholder="Full Name"
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            onChange={handleChange}
           />
           <input
             type="number"
-            value={phone}
             className="border border-black rounded-lg text-center"
             placeholder="phone number"
-            onChange={(e) => setPhone(e.target.value)}
+            name="phone"
+            onChange={handleChange}
           />
           <select
-            value={payment}
+            name="payment"
             className="border border-black rounded-lg text-center"
-            onChange={(e) => setPayment(e.target.value)}
+            onChange={handleChange}
           >
             <option value="">Payment Option</option>
             <option value="cbe">CBE</option>
