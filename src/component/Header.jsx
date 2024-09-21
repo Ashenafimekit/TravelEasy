@@ -17,7 +17,7 @@ const Header = () => {
         </div>
 
         <div className="account pr-10 ml-16">
-          <a href="#">LOGIN</a>
+          <Link to='/signin'>LOGIN</Link>
         </div>
       </div>
     </div>

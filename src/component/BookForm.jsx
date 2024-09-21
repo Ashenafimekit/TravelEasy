@@ -3,13 +3,17 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const BookForm = () => {
+  const location = useLocation();
+  const { departure, destination, date } = location.state || {};
+
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
     payment: "",
+    departure: departure,
+    destination: destination,
+    date: date,
   });
-  const location = useLocation();
-  const { departure, destination, date } = location.state || {};
 
   const handleChange = (e) => {
     setUserData({
@@ -18,14 +22,25 @@ const BookForm = () => {
     });
   };
 
-  const handleBook = async(e) => {
+  const handleBook = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('',userData)
-      console.log("success", response.data)
-      alert(response.data.message)
+      const response = await axios.post(
+        "http://localhost:3000/book/createbook",
+        userData
+      );
+      console.log("success", response.data);
+      alert(response.data.message);
+      console.log(
+        userData.name,
+        userData.phone,
+        userData.payment,
+        departure,
+        destination,
+        date
+      );
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -54,6 +69,7 @@ const BookForm = () => {
             type="text"
             className="border border-black rounded-lg text-center"
             placeholder="Full Name"
+            value={userData.name}
             name="name"
             onChange={handleChange}
           />
@@ -62,12 +78,14 @@ const BookForm = () => {
             className="border border-black rounded-lg text-center"
             placeholder="phone number"
             name="phone"
+            value={userData.phone}
             onChange={handleChange}
           />
           <select
             name="payment"
             className="border border-black rounded-lg text-center"
             onChange={handleChange}
+            value={userData.payment}
           >
             <option value="">Payment Option</option>
             <option value="cbe">CBE</option>

@@ -1,65 +1,85 @@
-import { ClearAll } from "@mui/icons-material";
+import axios from "axios";
 import React, { useState } from "react";
+import RoutCards from "./RoutCards";
 
 const Filter = () => {
-  const [departure, setDeparture] = useState();
-  const [destination, setDestination] = useState();
-  const [date, setDate] = useState();
-  const [time, setTime] = useState("");
-  const [price, setPrice] = useState("");
+  const [bus, setBus] = useState([]);
+  const [filterData, setFilterData] = useState({
+    departure: "",
+    destination: "",
+    date: "",
+  });
+
+  const handleChange = (e) => {
+    setFilterData({
+      ...filterData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleFilter = async (e) => {
+    e.preventDefault();
+    console.log(filterData);
+    try {
+      await axios
+        .post("http://localhost:3000/bus/filter", filterData)
+        .then((res) => {
+          setBus(res.data);
+          console.log(bus);
+        });
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
 
   const clearAll = () => {
-    setDeparture("");
-    setDestination("");
-    setDate("");
-    setTime("");
-    setPrice("");
+    setFilterData({
+      departure: "",
+      destination: "",
+      date: "",
+    });
+    setBus([]);
   };
   return (
-    <div className=" flex justify-center items-center mt-5 w-full">
-      <div className="flex flex-row gap-10 p-5">
-        <input
-          type="text"
-          value={departure}
-          placeholder="Departure"
-          className="border border-black rounded-md text-center"
-          onChange={(e) => setDeparture(e.target.value)}
-        />
-        <input
-          type="text"
-          value={destination}
-          placeholder="Destination"
-          className="border border-black rounded-md text-center"
-          onChange={(e) => setDestination(e.target.value)}
-        />
-        <input
-          type="Date"
-          value={date}
-          className="border border-black rounded-md"
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <input
-          type="Time"
-          value={time}
-          className="border border-black rounded-md"
-          onChange={(e) => setTime(e.target.value)}
-        />
-        <select
-          className="border border-black rounded-md"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        >
-          <option value="">Select Price</option>
-          <option value="option 1">1k</option>
-          <option value="option 2">2k</option>
-          <option value="option 3">3k</option>
-        </select>
-        <button
-          className="bg-black text-white p-2 rounded-lg"
-          onClick={clearAll}
-        >
-          Clear All
-        </button>
+    <div>
+      <div className=" flex justify-center items-center mt-5 w-full">
+        <form onSubmit={handleFilter} className="flex flex-row gap-10 p-5">
+          <input
+            type="text"
+            value={filterData.departure}
+            placeholder="Departure"
+            className="border border-black rounded-md text-center"
+            onChange={handleChange}
+            name="departure"
+          />
+          <input
+            type="text"
+            value={filterData.destination}
+            placeholder="Destination"
+            className="border border-black rounded-md text-center"
+            onChange={handleChange}
+            name="destination"
+          />
+          <input
+            type="Date"
+            value={filterData.date}
+            className="border border-black rounded-md"
+            onChange={handleChange}
+            name="date"
+          />
+          <button className="bg-black text-white p-2 rounded-lg" type="submit">
+            Filter
+          </button>
+          <button
+            className="bg-black text-white p-2 rounded-lg"
+            onClick={clearAll}
+          >
+            Clear All
+          </button>
+        </form>
+      </div>
+      <div>
+        <RoutCards bus={bus} />
       </div>
     </div>
   );

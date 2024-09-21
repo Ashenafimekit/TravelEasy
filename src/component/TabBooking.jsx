@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs } from "antd";
+import BookTable from "./BookTable";
 const { TabPane } = Tabs;
 
 const TabBooking = () => {
@@ -7,7 +8,7 @@ const TabBooking = () => {
     <div className="flex px-20">
       <Tabs defaultActiveKey="1" tabPosition="top" className="custom-tabs">
         <TabPane tab="Current Booking" key="1" >
-          Current Booking
+          <BookTable/>
         </TabPane>
         <TabPane tab="Booking History" key="2">
           Booking History

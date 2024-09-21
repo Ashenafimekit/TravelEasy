@@ -3,9 +3,9 @@ import phone from "../assets/telephone.jpg";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import XIcon from '@mui/icons-material/X';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from "@mui/icons-material/Instagram";
+import XIcon from "@mui/icons-material/X";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import axios from "axios";
 
 const ContactForm = () => {
@@ -23,14 +23,20 @@ const ContactForm = () => {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('',formData)
-      console.log("success ",response.data )
-      alert(response.data.message)
+      axios.post("http://localhost:3000/contact", formData).then((res) => {
+        alert(res.data.message);
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -108,7 +114,7 @@ const ContactForm = () => {
               Phone
             </label>
             <input
-              type="tel"
+              type="text"
               name="phone"
               id="phone"
               value={formData.phone}
