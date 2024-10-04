@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs } from "antd";
 import BookTable from "./BookTable";
+import BookHistory from "./BookHistory";
 const { TabPane } = Tabs;
 
 const TabBooking = () => {
@@ -11,7 +12,7 @@ const TabBooking = () => {
           <BookTable/>
         </TabPane>
         <TabPane tab="Booking History" key="2">
-          Booking History
+          <BookHistory/>
         </TabPane>
       </Tabs>
     </div>

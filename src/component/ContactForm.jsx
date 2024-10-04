@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import phone from "../assets/telephone.jpg";
+import phone from "../assets/telephone.jpg"; // Ensure this image path is correct
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -39,35 +39,38 @@ const ContactForm = () => {
       console.log(error);
     }
   };
+
   return (
-    <div className="flex flex-row items-center justify-center mx-32 m-5 mb-10 gap-2 bg-white rounded-lg shadow-xl ">
-      <div className="flex w-1/2 relative">
-        <img src={phone} alt="" className="rounded-lg p-1" />
-        <div className="flex flex-col items-center  absolute inset-0 py-6">
-          <h1 className="font-semibold text-lg ">Contact Information</h1>
-          <p className="text-sm">
+    <div className="flex flex-col md:flex-row items-center justify-center mx-4 md:mx-10 lg:mx-32 m-5 mb-10 gap-5 bg-white rounded-lg shadow-xl p-5 md:p-10">
+      {/* Contact Information Card */}
+      <div className="flex flex-col w-full md:w-1/2 bg-white rounded-lg shadow-lg overflow-hidden">
+        <img src={phone} alt="Contact" className="w-full h-48 object-cover" />
+        <div className="p-6">
+          <h1 className="font-semibold text-lg mb-2">Contact Information</h1>
+          <p className="text-sm mb-6">
             Reach out to us, and we'll get back to you as soon as possible.
           </p>
-
-          <h1 className="mt-10">
-            <PhoneInTalkIcon></PhoneInTalkIcon> +251987654321
-          </h1>
-          <h1 className="mt-2">
-            <EmailIcon></EmailIcon> TravelEasy@gmail.com
-          </h1>
-          <h1 className="mt-2">
-            <LocationOnIcon></LocationOnIcon> 1234 TravelEase Lane, Suite 567
-            City, State, 89012
-          </h1>
-          <h1 className="mt-32 space-x-4">
+          <div className="flex items-center mb-4">
+            <PhoneInTalkIcon className="mr-2" /> +251987654321
+          </div>
+          <div className="flex items-center mb-4">
+            <EmailIcon className="mr-2" /> TravelEasy@gmail.com
+          </div>
+          <div className="flex items-center mb-4">
+            <LocationOnIcon className="mr-2" /> 1234 TravelEase Lane, Suite 567, City, State, 89012
+          </div>
+          <div className="flex justify-center space-x-4 mt-4">
             <FacebookIcon fontSize="small" />
             <InstagramIcon fontSize="small" />
             <XIcon fontSize="small" />
-          </h1>
+          </div>
         </div>
       </div>
-      <div className=" w-1/2 pr-5">
-        <form onSubmit={handleSubmit} className="space-y-2 ">
+
+      {/* Form Card */}
+      <div className="flex w-full md:w-1/2 bg-white rounded-lg shadow-lg p-6">
+        <form onSubmit={handleSubmit} className="space-y-4 w-full">
+        <h1 className="font-bold text-2xl text-center">Contact Form</h1>
           <div>
             <label
               htmlFor="fullName"

@@ -19,14 +19,9 @@ const Filter = () => {
 
   const handleFilter = async (e) => {
     e.preventDefault();
-    console.log(filterData);
     try {
-      await axios
-        .post("http://localhost:3000/bus/filter", filterData)
-        .then((res) => {
-          setBus(res.data);
-          console.log(bus);
-        });
+      const res = await axios.post("http://localhost:3000/bus/filter", filterData);
+      setBus(res.data);
     } catch (error) {
       console.log("error : ", error);
     }
@@ -40,15 +35,21 @@ const Filter = () => {
     });
     setBus([]);
   };
+
   return (
-    <div>
-      <div className=" flex justify-center items-center mt-5 w-full">
-        <form onSubmit={handleFilter} className="flex flex-row gap-10 p-5">
+    <div className="p-4">
+      {/* Form Section */}
+      <div className="flex justify-center items-center mt-5 w-full">
+        <form
+          onSubmit={handleFilter}
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 w-full max-w-3xl"
+        >
+          {/* Input fields */}
           <input
             type="text"
             value={filterData.departure}
             placeholder="Departure"
-            className="border border-black rounded-md text-center"
+            className="border border-black rounded-md text-center p-2 w-full sm:w-1/3"
             onChange={handleChange}
             name="departure"
           />
@@ -56,29 +57,37 @@ const Filter = () => {
             type="text"
             value={filterData.destination}
             placeholder="Destination"
-            className="border border-black rounded-md text-center"
+            className="border border-black rounded-md text-center p-2 w-full sm:w-1/3"
             onChange={handleChange}
             name="destination"
           />
           <input
-            type="Date"
+            type="date"
             value={filterData.date}
-            className="border border-black rounded-md"
+            className="border border-black rounded-md p-2 text-center w-full sm:w-1/3"
             onChange={handleChange}
             name="date"
           />
-          <button className="bg-black text-white p-2 rounded-lg" type="submit">
-            Filter
-          </button>
-          <button
-            className="bg-black text-white p-2 rounded-lg"
-            onClick={clearAll}
-          >
-            Clear All
-          </button>
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
+            <button
+              className="bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
+              type="submit"
+            >
+              Filter
+            </button>
+            <button
+              className="bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
+              type="button"
+              onClick={clearAll}
+            >
+              Clear All
+            </button>
+          </div>
         </form>
       </div>
-      <div>
+      {/* Bus Cards Section */}
+      <div className="mt-6">
         <RoutCards bus={bus} />
       </div>
     </div>

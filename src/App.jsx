@@ -10,6 +10,10 @@ import Login from "./component/Login";
 import Signup from "./component/Signup";
 import BookTable from "./component/BookTable";
 import AdminPage from "./page/AdminPage";
+import AdminAddBus from "./component/AdminAddBus";
+import AdminDeletBus from "./component/AdminDeletBus";
+import AdminAllBooking from "./component/AdminAllBooking";
+import AdminAllUser from "./component/AdminAllUser";
 
 const App = () => {
   return (
@@ -25,7 +29,12 @@ const App = () => {
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/booktable" element={<BookTable />} />
-          <Route path="/admin" element={<AdminPage/>} />
+          <Route path="/admin" element={<AdminPage />}>
+            <Route path="addbus" element={<AdminAddBus />} />
+            <Route path="deletebus" element={<AdminDeletBus />} />
+            <Route path="allbooking" element={<AdminAllBooking />} />
+            <Route path="alluser" element={<AdminAllUser />} />
+          </Route>
         </Routes>
       </Router>
     </div>
