@@ -11,6 +11,8 @@ const Login = () => {
   const [response, setResponse] = useState("");
   const [responseType, setResponseType] = useState("");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   const handleChange = (e) => {
     setUserData({
@@ -33,7 +35,7 @@ const Login = () => {
 
     try {
       await axios
-        .post("http://localhost:3000/users/login", userData)
+        .post(`${apiUrl}/users/login`, userData)
         .then((res) => {
           const { token, user } = res.data;
 

@@ -4,13 +4,15 @@ import axios from "axios";
 
 const RoutCards = ({ bus }) => {
   const [busInfo, setBusInfo] = useState(bus || []);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     if (bus.length > 0) {
       setBusInfo(bus);
     } else {
       try {
-        axios.get("http://localhost:3000/bus/getbus").then((response) => {
+        axios.get(`${apiUrl}/bus/getbus`).then((response) => {
           setBusInfo(response.data);
         });
       } catch (error) {

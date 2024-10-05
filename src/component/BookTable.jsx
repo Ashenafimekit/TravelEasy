@@ -5,11 +5,13 @@ const BookTable = () => {
   const [userData, setUserData] = useState([]);
   const [response, setResponse] = useState("");
   const token = localStorage.getItem("token");
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/book/getbook", {
+        const res = await axios.get(`${apiUrl}/book/getbook`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -24,7 +26,7 @@ const BookTable = () => {
 
   const handleCancel = async (user) => {
     try {
-      const res = await axios.delete("http://localhost:3000/book/cancel", {
+      const res = await axios.delete(`${apiUrl}/book/cancel`, {
         data: {
           departure: user.departure,
           destination: user.destination,

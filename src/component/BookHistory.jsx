@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 
 const BookHistory = () => {
   const [userData, setUserData] = useState([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/book/getbookhistory");
+        const res = await axios.get(`${apiUrl}/book/getbookhistory`);
         setUserData(res.data);
       } catch (error) {
         console.log("error ", error);

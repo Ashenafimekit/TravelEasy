@@ -12,6 +12,7 @@ const Signup = () => {
 
   const [response, setResponse] = useState("");
   const [responseType, setResponseType] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setUserData({
@@ -26,7 +27,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       await axios
-        .post("http://localhost:3000/users/register", userData)
+        .post(`${apiUrl}/users/register`, userData)
         .then((res) => {
           if (res.status === 201) {
             setResponse(res.data.message);

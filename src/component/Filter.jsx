@@ -9,6 +9,7 @@ const Filter = () => {
     destination: "",
     date: "",
   });
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setFilterData({
@@ -20,7 +21,10 @@ const Filter = () => {
   const handleFilter = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/bus/filter", filterData);
+      const res = await axios.post(
+        `${apiUrl}/bus/filter`,
+        filterData
+      );
       setBus(res.data);
     } catch (error) {
       console.log("error : ", error);
@@ -38,13 +42,11 @@ const Filter = () => {
 
   return (
     <div className="p-4">
-      {/* Form Section */}
       <div className="flex justify-center items-center mt-5 w-full">
         <form
           onSubmit={handleFilter}
           className="flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 w-full max-w-3xl"
         >
-          {/* Input fields */}
           <input
             type="text"
             value={filterData.departure}
@@ -68,7 +70,6 @@ const Filter = () => {
             onChange={handleChange}
             name="date"
           />
-          {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
             <button
               className="bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
@@ -86,7 +87,6 @@ const Filter = () => {
           </div>
         </form>
       </div>
-      {/* Bus Cards Section */}
       <div className="mt-6">
         <RoutCards bus={bus} />
       </div>

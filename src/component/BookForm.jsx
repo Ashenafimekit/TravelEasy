@@ -20,6 +20,7 @@ const BookForm = () => {
   });
 
   const [takenSeats, setTakenSeats] = useState([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setUserData({
@@ -36,7 +37,7 @@ const BookForm = () => {
     console.log(token);
     try {
       const response = await axios.post(
-        "http://localhost:3000/book/createbook",
+        `${apiUrl}/book/createbook`,
         userData,
         {
           headers: {
@@ -78,7 +79,7 @@ const BookForm = () => {
   useEffect(() => {
     try {
       axios
-        .post("http://localhost:3000/book/takenseat", {
+        .post(`${apiUrl}/book/takenseat`, {
           departure,
           destination,
           date,

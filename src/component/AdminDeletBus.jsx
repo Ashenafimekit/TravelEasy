@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 const AdminDeletBus = () => {
   const [userData, setUserData] = useState([]);
   const [response, setResponse] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     try {
       console.log("check 1");
 
-      axios.get("http://localhost:3000/bus/getbusadmin").then((res) => {
+      axios.get(`${apiUrl}/bus/getbusadmin`).then((res) => {
         console.log("check 2");
         setUserData(res.data);
       });
@@ -29,7 +31,7 @@ const AdminDeletBus = () => {
     try {
       console.log("check melos");
       await axios
-        .delete("http://localhost:3000/bus/deletebus", {
+        .delete(`${apiUrl}/bus/deletebus`, {
           data: {
             departure: user.departure,
             destination: user.destination,

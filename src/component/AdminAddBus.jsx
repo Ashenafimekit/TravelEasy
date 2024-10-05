@@ -13,6 +13,7 @@ const AdminAddBus = () => {
   const [response, setResponse] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const userRole = localStorage.getItem("role");
@@ -34,7 +35,7 @@ const AdminAddBus = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/bus/addbus",
+        `${apiUrl}/bus/addbus`,
         busInfo,
         {
           headers: {

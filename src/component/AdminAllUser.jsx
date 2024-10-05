@@ -1,15 +1,17 @@
+import { ApiRounded } from "@mui/icons-material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const AdminAllUser = () => {
   const [users, setUsers] = useState([]);
   const [response, setResponse] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     try {
       console.log("check 1");
 
-      axios.get("http://localhost:3000/users/getusers").then((res) => {
+      axios.get(`${apiUrl}/users/getusers`).then((res) => {
         console.log("check 2");
         setUsers(res.data);
       });
@@ -27,7 +29,7 @@ const AdminAllUser = () => {
     try {
       console.log("check melos");
       await axios
-        .delete("http://localhost:3000/users/deleteuser", {
+        .delete(`${ApiRounded}/users/deleteuser`, {
           data: {
             username: user.username,
             role: user.role,

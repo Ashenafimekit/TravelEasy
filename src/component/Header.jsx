@@ -45,7 +45,6 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Links (visible on medium screens and above) */}
         <nav className="hidden md:flex flex-1 justify-end space-x-8">
           <Link to="/booking">MY TICKET</Link>
           <Link to="/rout">ROUTES</Link>
@@ -53,7 +52,6 @@ const Header = () => {
           <Link to="/contact">Contact US</Link>
         </nav>
 
-        {/* Account section */}
         <div className="account pr-4 md:pr-10 hidden md:flex">
           {username ? (
             <div className="flex flex-col items-center ml-3">
@@ -73,7 +71,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu (visible when the hamburger icon is clicked) */}
       {isOpen && (
         <nav className="md:hidden mt-4 flex flex-col items-end pr-4 space-y-4">
           <Link to="/booking" onClick={toggleMenu}>

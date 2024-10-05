@@ -15,6 +15,7 @@ const ContactForm = () => {
     phone: "",
     message: "",
   });
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setFormData({
@@ -26,7 +27,7 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      axios.post("http://localhost:3000/contact", formData).then((res) => {
+      axios.post(`${apiUrl}/contact`, formData).then((res) => {
         alert(res.data.message);
         setFormData({
           fullName: "",

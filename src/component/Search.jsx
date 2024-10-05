@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-import { CookieSharp } from "@mui/icons-material";
 
 const Search = () => {
   const [data, setData] = useState({
     departure: "",
     destination: "",
   });
-  const [bus, setBus] = useState([]);
+  const [bus, setBus] = useState("");
   const [response, setResponse] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setData({
@@ -23,28 +23,30 @@ const Search = () => {
     e.preventDefault();
 
     try {
-      await axios
-        .post("http://localhost:3000/bus/searchbus", data)
-        .then((res) => {
-          if (res.status === 200) {
-            setBus(res.data);
-            console.log(bus);
-            console.log("check 0", response)
-          }
-        });
+      await axios.post(`${apiUrl}/bus/searchbus`, data).then((res) => {
+        if (res.status === 200) {
+          setResponse(res.data.message);
+          console.log("available number of bus : ", bus);
+          console.log("check 0", response);
+        }
+      });
     } catch (error) {
       console.log("error : ", error);
       if (error.response) {
         if (error.response.status === 404) {
           setResponse(error.response.data.message);
-          console.log("check 1",response)
+          console.log("check 1", response);
         } else if (error.response.status === 500) {
           setResponse(error.response.data.message);
-          console.log("check 2",response)
+          console.log("check 2", response);
         }
       }
     }
   };
+
+  useEffect(() => {
+    console.log("Updated bus state:", bus); // Logs the updated bus state when it changes
+  }, [bus]);
 
   return (
     <div className="flex flex-col items-center bg-[#F5F5F5] h-auto p-5 gap-4">
@@ -86,14 +88,7 @@ const Search = () => {
           </button>
         </div>
       </div>
-      {bus.length > 0 ? (
-        <div>
-        <h1>there is {bus.length} buses available from {data.departure} to {data.destination}</h1>
-      </div>
-      ) : (
-        <h1>{response}</h1>
-      )}
-      
+      {response && <div>{response}</div>}
     </div>
   );
 };

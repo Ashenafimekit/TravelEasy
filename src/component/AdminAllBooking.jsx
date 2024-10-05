@@ -5,11 +5,12 @@ const AdminAllBooking = () => {
   const [userData, setUserData] = useState([]);
   const [response, setResponse] = useState("");
   const token = localStorage.getItem("token");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     try {
       axios
-        .get("http://localhost:3000/book/getbook", {
+        .get(`${apiUrl}/book/getbook`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -25,7 +26,7 @@ const AdminAllBooking = () => {
   const handleCancel = async (user) => {
     try {
       await axios
-        .delete("http://localhost:3000/book/cancel", {
+        .delete(`${apiUrl}/book/cancel`, {
           data: {
             departure: user.departure,
             destination: user.destination,
