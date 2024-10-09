@@ -9,7 +9,7 @@ const BookTable = () => {
 
 
   useEffect(() => {
-    console.log(apiUrl)
+    console.log("api url : ",apiUrl)
     const fetchData = async () => {
       try {
         const res = await axios.get(`${apiUrl}/book/getbook`, {
