@@ -64,7 +64,7 @@ const Login = () => {
           setResponse(error.response.data.message);
           setResponseType("error");
         } else if (error.response.status === 500) {
-          setResponse("Server Error : please try again");
+          setResponse(error.response.data.message);
           setResponseType("error");
         }
       }
