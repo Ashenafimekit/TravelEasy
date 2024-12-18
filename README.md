@@ -40,4 +40,46 @@
 
 - **Version Control**: **Git** & **GitHub** for collaboration and version tracking.
 
+---
 
+## Setup & Installation
+
+1. Clone the repository to your local machine:
+   ```bash
+   git clone https://github.com/your-username/travelease.git
+   ```
+
+2. Navigate to the project folder:
+   ```bash
+   cd travelease
+   ```
+
+3. Install backend dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
+
+4. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+5. Set up environment variables in the `.env` file for both frontend and backend (e.g., database URL, JWT secret).
+
+6. Run the project:
+   - Start the backend:
+     ```bash
+     cd backend
+     npm start
+     ```
+   - Start the frontend:
+     ```bash
+     cd frontend
+     npm start
+     ```
+
+Visit `http://localhost:5173` in your browser to view the app!
+
+---
