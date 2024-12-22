@@ -2,11 +2,13 @@ import React from "react";
 import { Tabs } from "antd";
 import BookTable from "./BookTable";
 import BookHistory from "./BookHistory";
+import '../css/tab.css'
+
 const { TabPane } = Tabs;
 
 const TabBooking = () => {
   return (
-    <div className="flex px-20">
+    <div className="flex px-20 my-5 justify-center ">
       <Tabs defaultActiveKey="1" tabPosition="top" className="custom-tabs">
         <TabPane tab="Current Booking" key="1" >
           <BookTable/>

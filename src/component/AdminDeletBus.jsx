@@ -70,7 +70,6 @@ const AdminDeletBus = () => {
             <th className="px-6 py-3 text-left text-gray-600 font-semibold">
               Price
             </th>
-
             <th className="px-6 py-3 text-left text-gray-600 font-semibold">
               Delete Bus
             </th>

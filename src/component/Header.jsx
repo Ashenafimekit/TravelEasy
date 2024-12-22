@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../css/header.css";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import MenuIcon from "@mui/icons-material/Menu";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +21,10 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#F5F5F5] p-5">
+    <header className="bg-black p-5 text-white sm:h-24 sticky top-0 z-50">
       <div className="flex justify-between items-center">
         {/* Logo */}
-        <div className="logo font-bold text-2xl pl-4 md:pl-16">
+        <div className="logo font-bold text-2xl pl-4 md:pl-16 hover:text-lightGray">
           <Link to="/">TravelEase</Link>
         </div>
 
@@ -28,51 +32,43 @@ const Header = () => {
         <div className="md:hidden pr-4">
           <button onClick={toggleMenu} className="focus:outline-none">
             {/* Hamburger Icon */}
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
+            <MenuIcon />
           </button>
         </div>
 
         <nav className="hidden md:flex flex-1 justify-end space-x-8">
-          <Link to="/booking">MY TICKET</Link>
-          <Link to="/rout">ROUTES</Link>
-          <Link to="/about">About US</Link>
-          <Link to="/contact">Contact US</Link>
+          <Link to="/booking" className="header hover:text-lightGray">
+            MY TICKET
+          </Link>
+          <Link to="/rout" className="header hover:text-lightGray">
+            ROUTES
+          </Link>
+          <Link to="/about" className="header hover:text-lightGray">
+            About US
+          </Link>
+          <Link to="/contact" className="header hover:text-lightGray">
+            Contact US
+          </Link>
         </nav>
 
-        <div className="account pr-4 md:pr-10 hidden md:flex">
+        <div className="account px-4 md:px-10 hidden md:flex ">
           {username ? (
-            <div className="flex flex-col items-center ml-3">
+            <div className="flex flex-col items-center ml-3 cursor-pointer hover:text-lightGray">
               <span>{username}</span>
-              <button
-                onClick={handleLogout}
-                className="ml-3"
-              >
-                Logout
+              <button onClick={handleLogout} className="ml-3">
+                <LogoutIcon/>
               </button>
             </div>
           ) : (
-            <Link to="/signin" className="ml-3">
-              LOGIN
+            <Link to="/signin" className="ml-3 cursor-pointer hover:text-lightGray">
+              <AccountBoxIcon />
             </Link>
           )}
         </div>
       </div>
 
       {isOpen && (
-        <nav className="md:hidden mt-4 flex flex-col items-end pr-4 space-y-4">
+        <nav className="md:hidden mt-4 flex flex-col items-end px-4 space-y-4">
           <Link to="/booking" onClick={toggleMenu}>
             MY TICKET
           </Link>
@@ -92,7 +88,7 @@ const Header = () => {
                 onClick={handleLogout}
                 className="text-red-500 hover:underline mt-2"
               >
-                Logout
+                <LogoutIcon/>
               </button>
             </div>
           ) : (
