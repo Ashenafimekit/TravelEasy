@@ -34,15 +34,11 @@ const AdminAddBus = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        `${apiUrl}/bus/addbus`,
-        busInfo,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.post(`${apiUrl}/bus/addbus`, busInfo, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       console.log("Token sent:", token);
       if (res.status === 201) {
@@ -67,26 +63,35 @@ const AdminAddBus = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center w-full m-10">
-        <div>
-          <h1 className="font-bold text-lg ">Bus Information</h1>
-        </div>
-        <div>
-          {response && (
-            <div>
-              <p className="font-bold text-sm text-center">{response}</p>
-            </div>
-          )}
-        </div>
+    <div className="flex flex-col gap-10">
+      <div className="bg-lightGray p-6">
+        <h1 className="text-center">
+          Welcome to the TravelEase Admin Dashboard! Manage your system
+          effectively and ensure seamless travel experiences for your customers
+        </h1>
+      </div>
+      <div className="flex flex-col items-center justify-center w-full ">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-center gap-5 p-5 border border-black rounded-lg shadow-lg w-2/4"
+          className="flex flex-col items-center justify-center gap-5 p-5  rounded-lg shadow-lg w-2/4 bg-lightGray"
         >
+          <div className="">
+            <div>
+              <h1 className="font-bold text-lg ">Bus Information</h1>
+            </div>
+            <div>
+              {response && (
+                <div>
+                  <p className="font-bold text-sm text-center">{response}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
           <input
             type="text"
             onChange={handleChange}
-            className="border border-black rounded-lg text-center w-1/3"
+            className="outline-none border hover:border-black rounded-md text-center h-10 w-1/2"
             placeholder="Departure"
             value={busInfo.departure}
             name="departure"
@@ -94,7 +99,7 @@ const AdminAddBus = () => {
           <input
             type="text"
             onChange={handleChange}
-            className="border border-black rounded-lg text-center w-1/3"
+            className="outline-none border hover:border-black rounded-md text-center h-10 w-1/2"
             placeholder="Destination"
             value={busInfo.destination}
             name="destination"
@@ -102,7 +107,7 @@ const AdminAddBus = () => {
           <input
             type="date"
             onChange={handleChange}
-            className="border border-black rounded-lg text-center w-1/3"
+            className="outline-none border hover:border-black rounded-md text-center h-10 w-1/2"
             placeholder="Date"
             value={busInfo.date}
             name="date"
@@ -110,7 +115,7 @@ const AdminAddBus = () => {
           <input
             type="time"
             onChange={handleChange}
-            className="border border-black rounded-lg text-center w-1/3"
+            className="outline-none border hover:border-black rounded-md text-center h-10 w-1/2"
             placeholder="Time"
             value={busInfo.time}
             name="time"
@@ -118,12 +123,15 @@ const AdminAddBus = () => {
           <input
             type="number"
             onChange={handleChange}
-            className="border border-black rounded-lg text-center w-1/3"
+            className="outline-none border hover:border-black rounded-md text-center h-10 w-1/2"
             placeholder="Price"
             value={busInfo.price}
             name="price"
           />
-          <button type="submit" className="bg-black text-white p-2 rounded-lg ">
+          <button
+            type="submit"
+            className="bg-black text-white p-2 rounded-lg w-1/2 hover:bg-darkGray"
+          >
             Add Bus
           </button>
         </form>

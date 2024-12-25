@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { motion } from "motion/react";
 
-
 const Search = () => {
   const [data, setData] = useState({
     departure: "",
@@ -51,10 +50,12 @@ const Search = () => {
   }, [bus]);
 
   return (
-    <div className="flex flex-col items-center bg-[#F5F5F5] h-auto p-5 gap-4">
+    <div className="flex flex-col items-center bg-[#F5F5F5] h-auto p-5 gap-4 relative">
       <div className="flex justify-center">
         <h2 className="font-bold text-2xl md:text-3xl">Search Bus</h2>
       </div>
+
+      <div className={`${response ? " bg-green-500 text-white text-center px-5 py-1 rounded-md" : ""} `}>{response && <div>{response}</div>}</div>
 
       <div className="flex flex-col lg:flex-row items-center justify-center bg-white w-full h-auto md:h-56 border rounded-3xl shadow-xl gap-8 md:gap-8 p-5">
         <div className="flex flex-col md:flex-row justify-center items-center gap-5">
@@ -83,7 +84,7 @@ const Search = () => {
         </div>
         <div className="">
           <motion.button
-            whileHover={{scale : 1.05}}
+            whileHover={{ scale: 1.05 }}
             className="bg-black hover:bg-darkGray text-white rounded-lg w-28 h-10 md:h-12"
             onClick={searchBus}
           >
@@ -91,7 +92,6 @@ const Search = () => {
           </motion.button>
         </div>
       </div>
-      {response && <div>{response}</div>}
     </div>
   );
 };

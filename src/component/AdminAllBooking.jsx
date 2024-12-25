@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 
 const AdminAllBooking = () => {
   const [userData, setUserData] = useState([]);
@@ -8,22 +9,34 @@ const AdminAllBooking = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    try {
-      axios
-        .get(`${apiUrl}/book/getbook`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUserData(res.data);
-        });
-    } catch (error) {
-      console.log("error ", error);
-    }
+    const fetchData = async () => {
+      try {
+        await axios
+          .get(`${apiUrl}/book/getbook`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setUserData(res.data);
+          });
+      } catch (error) {
+        console.log("error ", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  useEffect(() => {
+    userData.map((item)=>(
+      item.date = new Date(item.date).toLocaleDateString("en-GB")
+    ))    
+    //console.log("userData", userData);
+  }, [userData]);
+
   const handleCancel = async (user) => {
+    console.log("user", user);
     try {
       await axios
         .delete(`${apiUrl}/book/cancel`, {
@@ -36,71 +49,130 @@ const AdminAllBooking = () => {
         })
         .then((res) => {
           setResponse(res.data.message);
-          window.location.reload();
+          setUserData(userData.filter((item)=> item._id !== user._id))
         });
     } catch (error) {
       console.log("error : ", error);
     }
   };
 
+  const columns = [
+    { field: "name", headerName: "Full Name", width: 150 },
+    { field: "phone", headerName: "Phone", width: 150 },
+    { field: "seatNumber", headerName: "Seat No.", width: 80 },
+    { field: "departure", headerName: "Departure", width: 120 },
+    { field: "destination", headerName: "Destination", width: 120 },
+    { field: "date", headerName: "Date", width: 150 },
+    { field: "payment", headerName: "Payment Option", width: 130 },
+
+    {
+      field: "Cancel",
+      headerName: "Cancel",
+      width: 150,
+      renderCell: (params) => (
+        <button
+          className="bg-black text-white px-4 rounded-lg"
+          onClick={() => handleCancel(params.row)}
+        >
+          Cancel
+        </button>
+      ),
+    },
+  ];
+
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 5,
+    page: 0,
+  });
+
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      {response && (
-        <div className={`text-sm font-bold`}>
-          <p>{response}</p>
+    <div className="flex flex-col gap-10">
+      <div className="bg-lightGray p-6">
+        <h1 className="text-center">
+          Welcome to the TravelEase Admin Dashboard! Manage your system
+          effectively and ensure seamless travel experiences for your customers
+        </h1>
+      </div>
+      <div className="flex flex-col items-center justify-center w-full">
+        <div style={{ height: 495, width: "90%" }}>
+          <DataGrid
+            rows={userData}
+            getRowId={(row) => row._id}
+            columns={columns}
+            pageSizeOptions={[5, 10, 25, { value: -1, label: "All" }]}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+            checkboxSelection
+            sx={{
+              // Header Styles
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: "", // Dark background for header
+                color: "white", // White text
+              },
+
+              ".MuiDataGrid-columnHeaderTitleContainer": {
+                backgroundColor: "#1a1a1a", 
+                color: "white",
+              },
+              
+              ".MuiDataGrid-columnHeader.MuiDataGrid-columnHeader--sortable.MuiDataGrid-withBorderColor":{
+                backgroundColor: "#1a1a1a",
+                color: "white",
+              },
+              ".MuiDataGrid-row--borderBottom.css-yrdy0g-MuiDataGrid-columnHeaderRow > .MuiDataGrid-filler" : {
+                backgroundColor: "#1a1a1a",
+                color: "white",
+              },
+              "& .MuiDataGrid-sortIcon": {
+                color: "white", // Sort arrow color
+              },
+              "& .MuiDataGrid-menuIconButton": {
+                color: "white", // Default color for the three-dot menu
+              },
+              // Cell Styles
+              "& .MuiDataGrid-cell": {
+                color: "#333", // Dark text color for rows
+              },
+              // Row Styles (Alternating Colors)
+              "& .MuiDataGrid-row:nth-of-type(odd)": {
+                backgroundColor: "#f7f7f7", // Light grey for odd rows
+              },
+              "& .MuiDataGrid-row:nth-of-type(even)": {
+                backgroundColor: "#ffffff", // White for even rows
+              },
+              // Hover Styles
+              "& .MuiDataGrid-cell:hover": {
+                backgroundColor: "#ddd", // Light grey on hover
+              },
+              // Pagination and Grid Border
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: "#1a1a1a", // Footer background
+                color: "white !important", // Footer text color
+              },
+              // Pagination and row display text
+              "& .MuiTablePagination-displayedRows": {
+                color: "white !important", // Text for displayed rows
+              },
+              "& .MuiTablePagination-selectLabel": {
+                color: "white !important", // Text for "Rows per page"
+              },
+              "& .MuiSelect-select": {
+                color: "white !important", // Dropdown text for page size
+              },
+              // Icons or buttons in the footer
+              "& .MuiIconButton-root": {
+                color: "white !important", // Pagination buttons
+              },
+              "& .MuiSelect-icon": {
+                color: "white", // Dropdown arrow color
+              },
+              "& .MuiDataGrid-root": {
+                border: "1px solid #ccc", // Light border around grid
+              },
+            }}
+          />
         </div>
-      )}
-      <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-        <thead className="bg-gray-200 border-b border-gray-300">
-          <tr>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Full Name
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Phone Number
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Seat Number
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Departure
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Destination
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Date
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Payment Option
-            </th>
-            <th className="px-6 py-3 text-left text-gray-600 font-semibold">
-              Cancel Ticket
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {userData.map((user, index) => (
-            <tr key={index} className="hover:bg-gray-100">
-              <td className="px-6 py-4 text-gray-800">{user.name}</td>
-              <td className="px-6 py-4 text-gray-800">{user.phone}</td>
-              <td className="px-6 py-4 text-gray-800">{user.seatNumber}</td>
-              <td className="px-6 py-4 text-gray-800">{user.departure}</td>
-              <td className="px-6 py-4 text-gray-800">{user.destination}</td>
-              <td className="px-6 py-4 text-gray-800">{user.date}</td>
-              <td className="px-6 py-4 text-gray-800">{user.payment}</td>
-              <td className="px-6 py-4 text-gray-800">
-                <button
-                  onClick={() => handleCancel(user)}
-                  className="bg-black p-2 rounded-lg text-white"
-                >
-                  Cancel
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      </div>
     </div>
   );
 };
