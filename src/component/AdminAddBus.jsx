@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AdminAddBus = () => {
   const [busInfo, setBusInfo] = useState({
@@ -43,6 +44,7 @@ const AdminAddBus = () => {
       console.log("Token sent:", token);
       if (res.status === 201) {
         setResponse(res.data.message);
+        toast.success(res.data.message)
       }
 
       setBusInfo({
@@ -57,6 +59,7 @@ const AdminAddBus = () => {
       if (error.response) {
         if (error.response.status === 500) {
           setResponse(error.response.data.message);
+          toast.error(error.response.data.message)
         }
       }
     }
@@ -71,6 +74,7 @@ const AdminAddBus = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center justify-center w-full ">
+        <ToastContainer />
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center justify-center gap-5 p-5  rounded-lg shadow-lg w-2/4 bg-lightGray"
@@ -79,13 +83,7 @@ const AdminAddBus = () => {
             <div>
               <h1 className="font-bold text-lg ">Bus Information</h1>
             </div>
-            <div>
-              {response && (
-                <div>
-                  <p className="font-bold text-sm text-center">{response}</p>
-                </div>
-              )}
-            </div>
+           
           </div>
 
           <input

@@ -15,6 +15,8 @@ import AdminDeletBus from "./component/AdminDeletBus";
 import AdminAllBooking from "./component/AdminAllBooking";
 import AdminAllUser from "./component/AdminAllUser";
 import StatsTab from "./component/StatsTab";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const App = () => {
   return (

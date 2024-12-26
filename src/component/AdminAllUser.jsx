@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid } from "@mui/x-data-grid";
+import { ToastContainer, toast } from "react-toastify";
 
 const AdminAllUser = () => {
   const [users, setUsers] = useState([]);
@@ -18,6 +19,7 @@ const AdminAllUser = () => {
         if (error.response) {
           if (error.response.status == 404) {
             setResponse(error.response.data.message);
+            toast.error(error.response.data.message);
           }
         }
         console.log("error ", error);
@@ -38,10 +40,12 @@ const AdminAllUser = () => {
         })
         .then((res) => {
           setResponse(res.data.message);
+          toast.success(res.data.message);
           setUsers(users.filter((item) => item._id !== user._id));
         });
     } catch (error) {
       console.log("error : ", error);
+      toast.error("Server Error, please try again");
     }
   };
 
@@ -78,6 +82,7 @@ const AdminAllUser = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center justify-center w-full">
+        <ToastContainer />
         <div style={{ height: 495, width: "60%" }}>
           <DataGrid
             rows={users}

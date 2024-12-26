@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { ToastContainer,toast } from "react-toastify";
 
 const AdminAllBooking = () => {
   const [userData, setUserData] = useState([]);
@@ -49,10 +50,12 @@ const AdminAllBooking = () => {
         })
         .then((res) => {
           setResponse(res.data.message);
+          toast.success(res.data.message);
           setUserData(userData.filter((item)=> item._id !== user._id))
         });
     } catch (error) {
       console.log("error : ", error);
+      toast.error("Server Error, please try again");
     }
   };
 
@@ -94,6 +97,7 @@ const AdminAllBooking = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center justify-center w-full">
+        <ToastContainer />
         <div style={{ height: 495, width: "90%" }}>
           <DataGrid
             rows={userData}

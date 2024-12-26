@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import gIcon from "../assets/gIcon.png";
-import { Link, useNavigation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -9,6 +11,7 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+
 
   const [response, setResponse] = useState("");
   const [responseType, setResponseType] = useState("");
@@ -31,6 +34,7 @@ const Signup = () => {
         .then((res) => {
           if (res.status === 201) {
             setResponse(res.data.message);
+            toast.success(res.data.message)
             setResponseType("success");
           }
           setUserData({
@@ -43,9 +47,11 @@ const Signup = () => {
       if (error.response) {
         if (error.response.status === 400) {
           setResponse(error.response.data.message);
+          toast.error(error.response.data.message);
           setResponseType("error");
         } else if (error.response.status === 500) {
           setResponse("Server Error please try again");
+          toast.error("Server Error please try again!")
           setResponseType("error");
         }
       }
@@ -64,16 +70,13 @@ const Signup = () => {
               : ""
         }`}
       >
+        <div className="">
+          <ToastContainer/>
+        </div>
         <div>
           <h1 className="font-bold text-lg sm:text-xl">Join Us! Sign Up Now</h1>
         </div>
-        {response && (
-          <div
-            className={`font-bold text-sm text-center ${responseType === "error" ? "text-red-500" : "text-green-500"}`}
-          >
-            {response}
-          </div>
-        )}
+
         <div className="w-full">
           <input
             type="text"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import gIcon from "../assets/gIcon.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -51,6 +52,7 @@ const Login = () => {
 
           if (res.status === 201) {
             setResponse(res.data.message);
+            toast.success(res.data.message)
             setResponseType("success");
           }
           setUserData({
@@ -62,9 +64,11 @@ const Login = () => {
       if (error.response) {
         if (error.response.status === 400) {
           setResponse(error.response.data.message);
+          toast.error(error.response.data.message)
           setResponseType("error");
         } else if (error.response.status === 500) {
           setResponse("Server Error : please try again");
+          toast.error("Server Error please try agian!")
           setResponseType("error");
         }
       }
@@ -83,13 +87,9 @@ const Login = () => {
               : ""
         }`}
       >
-        {response && (
-          <div
-            className={`font-bold text-sm text-center ${responseType === "error" ? "text-red-500" : "text-green-500"}`}
-          >
-            {response}
-          </div>
-        )}
+       <div className="">
+        <ToastContainer/>
+       </div>
         <div>
           <h1 className="font-bold text-lg sm:text-xl">
             Log In to Your Account

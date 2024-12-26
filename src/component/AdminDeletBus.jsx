@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ToastContainer, toast } from "react-toastify";
 
 const AdminDeletBus = () => {
   const [userData, setUserData] = useState([]);
@@ -18,6 +19,7 @@ const AdminDeletBus = () => {
         if (error.response) {
           if (error.response.status == 404) {
             setResponse(error.response.data.message);
+            toast.error(error.response.data.message);
           }
         }
         console.log("error ", error);
@@ -45,10 +47,20 @@ const AdminDeletBus = () => {
         })
         .then((res) => {
           setResponse(res.data.message);
+          toast.success(res.data.message);
           setUserData(userData.filter((item) => item._id !== user._id));
         });
     } catch (error) {
-      console.log("error : ", error);
+      if (error.response) {
+        if (error.response.status == 404) {
+          setResponse(error.response.data.message);
+          toast.error(error.response.data.message);
+        } if (error.response.status == 500) {
+          setResponse(error.response.data.message);
+          toast.error(error.response.data.message);
+        }
+      }
+      console.log("error ", error);
     }
   };
 
@@ -87,6 +99,7 @@ const AdminDeletBus = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center justify-center w-full">
+        <ToastContainer />
         <div style={{ height: 495, width: "80%" }}>
           <DataGrid
             rows={userData}
@@ -104,18 +117,20 @@ const AdminDeletBus = () => {
               },
 
               ".MuiDataGrid-columnHeaderTitleContainer": {
-                backgroundColor: "#1a1a1a", 
-                color: "white",
-              },
-              
-              ".MuiDataGrid-columnHeader.MuiDataGrid-columnHeader--sortable.MuiDataGrid-withBorderColor":{
                 backgroundColor: "#1a1a1a",
                 color: "white",
               },
-              ".MuiDataGrid-row--borderBottom.css-yrdy0g-MuiDataGrid-columnHeaderRow > .MuiDataGrid-filler" : {
-                backgroundColor: "#1a1a1a",
-                color: "white",
-              },
+
+              ".MuiDataGrid-columnHeader.MuiDataGrid-columnHeader--sortable.MuiDataGrid-withBorderColor":
+                {
+                  backgroundColor: "#1a1a1a",
+                  color: "white",
+                },
+              ".MuiDataGrid-row--borderBottom.css-yrdy0g-MuiDataGrid-columnHeaderRow > .MuiDataGrid-filler":
+                {
+                  backgroundColor: "#1a1a1a",
+                  color: "white",
+                },
               "& .MuiDataGrid-sortIcon": {
                 color: "white", // Sort arrow color
               },
