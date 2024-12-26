@@ -14,6 +14,7 @@ import AdminAddBus from "./component/AdminAddBus";
 import AdminDeletBus from "./component/AdminDeletBus";
 import AdminAllBooking from "./component/AdminAllBooking";
 import AdminAllUser from "./component/AdminAllUser";
+import StatsTab from "./component/StatsTab";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/booktable" element={<BookTable />} />
           <Route path="/admin" element={<AdminPage />}>
+            <Route index element={<StatsTab />} />
             <Route path="addbus" element={<AdminAddBus />} />
             <Route path="deletebus" element={<AdminDeletBus />} />
             <Route path="allbooking" element={<AdminAllBooking />} />

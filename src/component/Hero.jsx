@@ -21,7 +21,7 @@ function Hero() {
     heroText[location.pathname] || "Book Your Bus Tickets Effortlessly";
 
   return (
-    <div className="relative h-96 md:h-[600px] overflow-hidden">
+    <div className="relative h-96 md:h-[550px] overflow-hidden">
       <img
         src={heroImage}
         alt="Hero Background"
@@ -39,9 +39,9 @@ function Hero() {
         </div>
 
         <div className="">
-          <Link to="/signup">
+          <Link to="/rout">
             <motion.button whileHover={{scale: 1.05}} className="bg-black border-black hover:bg-darkGray rounded-md w-20 h-10 md:w-40 md:h-12 text-white text-xs sm:text-sm md:text-base lg:text-lg transition duration-200">
-              Signup
+              BOOk NOW
             </motion.button>
           </Link>
         </div>
