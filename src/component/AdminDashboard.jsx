@@ -3,19 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const AdminDashboard = () => {
-  const username = localStorage.getItem("username");
+  const username = sessionStorage.getItem("username");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userRole = localStorage.getItem("role");
+    const userRole = sessionStorage.getItem("role");
     if (userRole !== "admin") {
       navigate("/");
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
     navigate("/")
   };
 

@@ -7,12 +7,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const username = localStorage.getItem("username");
+  const username = sessionStorage.getItem("username");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("avatar");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("avatar");
     window.location.reload();
   };
 
@@ -21,7 +21,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-black p-5 text-white sm:h-24 sticky top-0 z-50">
+    <header className="bg-black p-5 text-white sm:h-20 sticky top-0 z-50">
       <div className="flex justify-between items-center">
         {/* Logo */}
         <div className="logo font-bold text-2xl pl-4 md:pl-16 hover:text-lightGray">

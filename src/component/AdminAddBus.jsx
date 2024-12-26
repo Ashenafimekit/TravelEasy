@@ -11,12 +11,12 @@ const AdminAddBus = () => {
     price: "",
   });
   const [response, setResponse] = useState("");
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const userRole = localStorage.getItem("role");
+    const userRole = sessionStorage.getItem("role");
     if (userRole !== "admin") {
       navigate("/");
     }

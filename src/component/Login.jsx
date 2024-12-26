@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -39,9 +39,9 @@ const Login = () => {
         .then((res) => {
           const { token, user } = res.data;
 
-          localStorage.setItem("token", token);
-          localStorage.setItem("username", user.username);
-          localStorage.setItem("role", user.role);
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("username", user.username);
+          sessionStorage.setItem("role", user.role);
 
           if (user.role === "admin") {
             navigate("/admin");

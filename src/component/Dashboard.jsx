@@ -6,21 +6,22 @@ import AddIcon from '@mui/icons-material/Add';
 import TableViewIcon from '@mui/icons-material/TableView';
 import BookIcon from '@mui/icons-material/Book';
 import PersonIcon from '@mui/icons-material/Person';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Dashboard = () => {
-  const username = localStorage.getItem("username");
+  const username = sessionStorage.getItem("username");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userRole = localStorage.getItem("role");
+    const userRole = sessionStorage.getItem("role");
     if (userRole !== "admin") {
       navigate("/");
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
     navigate("/");
   };
   return (
@@ -43,6 +44,9 @@ const Dashboard = () => {
           </h1>
           <h1 className="hover:bg-darkGray p-2">
             <Link to="alluser"><PersonIcon/> User</Link>
+          </h1>
+          <h1 className="hover:bg-darkGray p-2">
+            <Link to="/"><HomeIcon/> Home</Link>
           </h1>
         </div>
       </div>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 const BookTable = () => {
   const [userData, setUserData] = useState([]);
   const [response, setResponse] = useState("");
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const apiUrl = import.meta.env.VITE_API_URL;
 
 

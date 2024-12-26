@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 const AdminAllBooking = () => {
   const [userData, setUserData] = useState([]);
   const [response, setResponse] = useState("");
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {

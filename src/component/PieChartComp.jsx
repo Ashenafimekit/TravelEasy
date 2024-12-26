@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { Box } from "@mui/material";
+
 
 const PieChartComp = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -77,7 +79,8 @@ const PieChartComp = () => {
           </button>
         </form>
       </div>
-      <PieChart width={400} height={385}>
+      
+      <PieChart width={800} height={385}  className="border rounded-lg shadow-xl bg-white">
         <Pie
           data={seatData}
           dataKey="value"

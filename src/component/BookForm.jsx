@@ -1,9 +1,9 @@
-import { DesignServices } from "@mui/icons-material";
 import axios from "axios";
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const BookForm = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const location = useLocation();
   const { departure, destination, date } = location.state || {};
   const [message, setMessage] = useState("");
@@ -20,7 +20,6 @@ const BookForm = () => {
   });
 
   const [takenSeats, setTakenSeats] = useState([]);
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setUserData({
@@ -32,20 +31,17 @@ const BookForm = () => {
 
   const handleBook = async (e) => {
     e.preventDefault();
-    console.log("melos check");
-    const token = localStorage.getItem("token");
-    console.log(token);
+    const token = sessionStorage.getItem("token");
     try {
       const response = await axios.post(
         `${apiUrl}/book/createbook`,
         userData,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Send token in the request header
+            Authorization: `Bearer ${token}`, 
           },
         }
       );
-      console.log("check melos");
       if (response.status === 201) {
         setMessage(response.data.message);
         setMessageType("success");
