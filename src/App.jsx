@@ -16,6 +16,8 @@ import AdminAllBooking from "./component/AdminAllBooking";
 import AdminAllUser from "./component/AdminAllUser";
 import StatsTab from "./component/StatsTab";
 import 'react-toastify/dist/ReactToastify.css';
+import 'aos/dist/aos.css'; 
+
 
 
 const App = () => {

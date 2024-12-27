@@ -5,6 +5,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible((prev) => !prev);
+  };
+
   const [userData, setUserData] = useState({
     username: "",
     password: "",
@@ -13,7 +19,6 @@ const Login = () => {
   const [responseType, setResponseType] = useState("");
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
-
 
   const handleChange = (e) => {
     setUserData({
@@ -35,40 +40,38 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await axios
-        .post(`${apiUrl}/users/login`, userData)
-        .then((res) => {
-          const { token, user } = res.data;
+      await axios.post(`${apiUrl}/users/login`, userData).then((res) => {
+        const { token, user } = res.data;
 
-          sessionStorage.setItem("token", token);
-          sessionStorage.setItem("username", user.username);
-          sessionStorage.setItem("role", user.role);
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("username", user.username);
+        sessionStorage.setItem("role", user.role);
 
-          if (user.role === "admin") {
-            navigate("/admin");
-          } else {
-            navigate("/");
-          }
+        if (user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
 
-          if (res.status === 201) {
-            setResponse(res.data.message);
-            toast.success(res.data.message)
-            setResponseType("success");
-          }
-          setUserData({
-            username: "",
-            password: "",
-          });
+        if (res.status === 201) {
+          setResponse(res.data.message);
+          toast.success(res.data.message);
+          setResponseType("success");
+        }
+        setUserData({
+          username: "",
+          password: "",
         });
+      });
     } catch (error) {
       if (error.response) {
         if (error.response.status === 400) {
           setResponse(error.response.data.message);
-          toast.error(error.response.data.message)
+          toast.error(error.response.data.message);
           setResponseType("error");
         } else if (error.response.status === 500) {
           setResponse("Server Error : please try again");
-          toast.error("Server Error please try agian!")
+          toast.error("Server Error please try agian!");
           setResponseType("error");
         }
       }
@@ -87,9 +90,9 @@ const Login = () => {
               : ""
         }`}
       >
-       <div className="">
-        <ToastContainer/>
-       </div>
+        <div className="">
+          <ToastContainer />
+        </div>
         <div>
           <h1 className="font-bold text-lg sm:text-xl">
             Log In to Your Account
@@ -104,14 +107,22 @@ const Login = () => {
             className="border border-black rounded-md text-center w-full p-2"
           />
         </div>
-        <div className="w-full">
+        <div className="w-full relative">
           <input
-            type="password"
+            type={isVisible ? "text" : "password"}
             name="password"
-            onChange={handleChange}
+            value={userData.password}
             placeholder="Password"
+            onChange={handleChange}
             className="border border-black rounded-md text-center w-full p-2"
           />
+          <button
+            type="button"
+            onClick={toggleVisibility}
+            className="absolute top-2 right-3 cursor-pointer"
+          >
+            {isVisible ? "🙈" : "👁️"}
+          </button>
         </div>
         <div className="">
           <button className="bg-black rounded-lg text-white p-2 w-full sm:w-48">

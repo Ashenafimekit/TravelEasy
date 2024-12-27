@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const BookForm = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -33,18 +34,15 @@ const BookForm = () => {
     e.preventDefault();
     const token = sessionStorage.getItem("token");
     try {
-      const response = await axios.post(
-        `${apiUrl}/book/createbook`,
-        userData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-        }
-      );
+      const response = await axios.post(`${apiUrl}/book/createbook`, userData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status === 201) {
         setMessage(response.data.message);
         setMessageType("success");
+        toast.success(response.data.message);
       }
 
       setUserData({
@@ -60,13 +58,16 @@ const BookForm = () => {
       if (error.response) {
         if (error.response.status === 400) {
           setMessage(error.response.data.message);
+          toast.error(error.response.data.message);
           setMessageType("error");
         } else if (error.response.status === 401) {
           setMessage(error.response.data.message);
+          toast.error(error.response.data.message);
           setMessageType("error");
         } else if (error.response.status === 500) {
           setMessage("Server Error: Please try again later.");
           setMessageType("error");
+          toast.error("Server Error Please try again!");
         }
       }
     }
@@ -109,15 +110,7 @@ const BookForm = () => {
         }`}
       >
         <h1 className="font-bold text-2xl text-center">Booking Form</h1>
-        {message && (
-          <div
-            className={`font-bold text-sm text-center ${
-              messageType === "error" ? "text-red-500" : "text-green-500"
-            }`}
-          >
-            {message}
-          </div>
-        )}
+        <ToastContainer/>
         <form onSubmit={handleBook} className="flex flex-col gap-5 px-10 py-4">
           <input
             type="text"
@@ -183,9 +176,12 @@ const BookForm = () => {
 
       <div className="flex flex-col items-center justify-center p-3 border border-black rounded-lg shadow-lg w-full lg:w-2/6">
         <div className="flex flex-row ">
-          <h1 className="font-bold text-2xl text-center mb-2 text-green-500">Available</h1>
-          <h1 className="font-bold text-2xl text-center mb-2 ml-5 text-red-500">Taken</h1>
-
+          <h1 className="font-bold text-2xl text-center mb-2 text-green-500">
+            Available
+          </h1>
+          <h1 className="font-bold text-2xl text-center mb-2 ml-5 text-red-500">
+            Taken
+          </h1>
         </div>
         <div className="grid grid-cols-6 lg:grid-cols-8 md:grid-cols-8 sm:grid-cols-8 gap-3">
           {allSeats.map((seatNumber) => (

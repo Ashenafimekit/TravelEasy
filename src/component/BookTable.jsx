@@ -1,30 +1,41 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { motion } from "motion/react";
+import AOS from "aos";
 
 const BookTable = () => {
   const [userData, setUserData] = useState([]);
+  const [formatedData, setFormatedData] = useState([]);
   const [response, setResponse] = useState("");
   const token = sessionStorage.getItem("token");
   const apiUrl = import.meta.env.VITE_API_URL;
 
-
   useEffect(() => {
-    console.log("api url : ",apiUrl)
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${apiUrl}/book/getbook`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUserData(res.data);
-        console.log("check getbook")
+        await axios
+          .get(`${apiUrl}/book/getbook`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setUserData(res.data);
+          });
       } catch (error) {
         console.log("error ", error);
       }
     };
     fetchData();
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    userData.map(
+      (item) => (item.date = new Date(item.date).toLocaleDateString("en-GB"))
+    );
+    setFormatedData(userData);
+  }, [userData]);
 
   const handleCancel = async (user) => {
     try {
@@ -37,36 +48,64 @@ const BookTable = () => {
         },
       });
       setResponse(res.data.message);
-      window.location.reload();
+      toast.success(res.data.message);
+      console.log(response);
+      setFormatedData(formatedData.filter((data) => data._id !== user._id));
     } catch (error) {
       console.log("error : ", error);
+      toast.error(error);
     }
   };
 
+  useEffect(() => {
+    AOS.init({
+      offset: 120, // offset (in px) from the original trigger point
+      delay: 50, // values from 0 to 3000, with step 50ms
+      duration: 1000, // values from 0 to 3000, with step 50ms
+      easing: "ease-in-out", // default easing for AOS animations
+      once: false, // whether animation should happen only once - while scrolling down
+    });
+  });
+
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
-      {response && (
-        <div className={`text-sm font-bold mb-4`}>
-          <p>{response}</p>
-        </div>
-      )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {userData.map((user, index) => (
-          <div key={index} className=" border border-gray-300 rounded-lg shadow-md p-4 bg-white">
+      <div>
+        <ToastContainer />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {formatedData.map((user, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.02 }}
+            data-aos="fade-bottom"
+            className="border border-gray-300 rounded-lg shadow-md p-4 bg-white "
+          >
             <h2 className="text-lg font-semibold mb-2">{user.name}</h2>
-            <p><strong>Phone Number:</strong> {user.phone}</p>
-            <p><strong>Seat Number:</strong> {user.seatNumber}</p>
-            <p><strong>Departure:</strong> {user.departure}</p>
-            <p><strong>Destination:</strong> {user.destination}</p>
-            <p><strong>Date:</strong> {user.date}</p>
-            <p><strong>Payment Option:</strong> {user.payment}</p>
+            <p>
+              <strong>Phone Number:</strong> {user.phone}
+            </p>
+            <p>
+              <strong>Seat Number:</strong> {user.seatNumber}
+            </p>
+            <p>
+              <strong>Departure:</strong> {user.departure}
+            </p>
+            <p>
+              <strong>Destination:</strong> {user.destination}
+            </p>
+            <p>
+              <strong>Date:</strong> {user.date}
+            </p>
+            <p>
+              <strong>Payment Option:</strong> {user.payment}
+            </p>
             <button
               onClick={() => handleCancel(user)}
-              className="bg-black p-2 rounded-lg text-white mt-2"
+              className="bg-darkGray hover:bg-black p-2 rounded-lg text-white mt-2 w-full "
             >
               Cancel
             </button>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -85,7 +85,7 @@ const Search = () => {
         <div className="">
           <motion.button
             whileHover={{ scale: 1.05 }}
-            className="bg-black hover:bg-darkGray text-white rounded-lg w-28 h-10 md:h-12"
+            className="bg-darkGray hover:bg-black text-white rounded-lg w-28 h-10 md:h-12"
             onClick={searchBus}
           >
             Search

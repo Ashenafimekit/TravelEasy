@@ -72,13 +72,13 @@ const Filter = () => {
           />
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
             <button
-              className="bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
+              className="bg-darkGray hover:bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
               type="submit"
             >
               Filter
             </button>
             <button
-              className="bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
+              className="bg-darkGray hover:bg-black text-white p-2 rounded-lg sm:w-full lg:w-20 md:w-20"
               type="button"
               onClick={clearAll}
             >

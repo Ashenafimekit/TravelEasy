@@ -40,7 +40,7 @@ function Hero() {
 
         <div className="">
           <Link to="/rout">
-            <motion.button whileHover={{scale: 1.05}} className="bg-black border-black hover:bg-darkGray rounded-md w-20 h-10 md:w-40 md:h-12 text-white text-xs sm:text-sm md:text-base lg:text-lg transition duration-200">
+            <motion.button whileHover={{scale: 1.05}} className="bg-darkGray border-black hover:bg-black rounded-md w-20 h-10 md:w-40 md:h-12 text-white text-xs sm:text-sm md:text-base lg:text-lg transition duration-200">
               BOOk NOW
             </motion.button>
           </Link>
