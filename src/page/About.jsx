@@ -1,7 +1,6 @@
 import React from "react";
-
 import Header from "../component/Header";
-import Hero from "../component/Hero";
+import Hero2 from "../component/Hero2";
 import Footer from "../component/Footer";
 import Mission from "../component/Mission";
 import CoreValue from "../component/CoreValue";
@@ -11,7 +10,7 @@ const About = () => {
   return (
     <div>
       <Header />
-      <Hero />
+      <Hero2 />
       <Mission />
       <CoreValue/>
       <Leader/>
