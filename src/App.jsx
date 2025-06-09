@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
 import Contact from "./page/Contact";
 import About from "./page/About";
@@ -15,10 +15,8 @@ import AdminDeletBus from "./component/AdminDeletBus";
 import AdminAllBooking from "./component/AdminAllBooking";
 import AdminAllUser from "./component/AdminAllUser";
 import StatsTab from "./component/StatsTab";
-import 'react-toastify/dist/ReactToastify.css';
-import 'aos/dist/aos.css'; 
-
-
+import "react-toastify/dist/ReactToastify.css";
+import "aos/dist/aos.css";
 
 const App = () => {
   return (
